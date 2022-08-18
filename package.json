@@ -1,0 +1,31 @@
+{
+  "name": "Assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon App.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "glue": "^6.0.0",
+    "hapi": "^18.1.0",
+    "hapi-swagger": "^14.5.5",
+    "inert": "^5.1.3",
+    "joi": "^17.6.0",
+    "mongodb": "^4.8.1",
+    "mongoose": "^6.5.0",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3",
+    "vision": "^5.4.4"
+  }
+}
