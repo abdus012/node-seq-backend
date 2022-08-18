@@ -1,10 +1,3 @@
-
-const db = require('./seqDB/index')
-const Joi = require('joi');
-const config = require('./config/config')
-const manifest = config.server;
-const Glue = require('glue');
-
 'use strict';
 
 const Hapi = require('@hapi/hapi');
