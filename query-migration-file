@@ -1,0 +1,54 @@
+CREATE TABLE public.emp_department (
+	id serial NOT NULL,
+	department_name varchar(50) NOT NULL,
+	emp_count int4 NOT NULL,
+	CONSTRAINT emp_department_pkey PRIMARY KEY (id)
+);
+
+
+CREATE TABLE public.emp_details (
+	id serial NOT NULL,
+	emp_name varchar(50) NOT NULL,
+	emp_domain varchar(50) NOT NULL,
+	CONSTRAINT emp_details_pkey PRIMARY KEY (id)
+);
+
+
+insert into employee.public.emp_details (emp_name, emp_domain) 
+values ('abdus', 'software_developer');
+
+
+insert into employee.public.emp_department (department_name, emp_count) 
+values ('software_developer',0);
+
+
+select * from public.emp_details;
+
+
+select * from public.emp_department;
+
+
+-- Table Triggers
+
+create trigger trig_dep_count after
+insert
+    on
+    public.emp_details for each row execute function func_update_dep_count();
+    
+CREATE TRIGGER trig_dep_count
+AFTER INSERT
+ON emp_details
+FOR EACH ROW
+EXECUTE PROCEDURE func_update_dep_count();
+
+CREATE OR REPLACE FUNCTION func_update_dep_count()
+RETURNS trigger AS
+$BODY$
+begin
+UPDATE employee.public.emp_department
+SET emp_count = emp_count + 1
+where department_name = new.emp_domain;
+    RETURN new; 
+END;
+$BODY$
+ LANGUAGE plpgsql VOLATILE;
