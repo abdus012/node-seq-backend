@@ -9,16 +9,6 @@ const config = {
         dialect: "postgres",
       },
     },
-    server: { 
-        plugin: './api',
-        options: {
-          routes: {
-            prefix: '/api'
-          }
-        }
-      
-      
-    },
 };
 
 module.exports = config;
