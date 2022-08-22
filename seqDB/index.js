@@ -3,37 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(module.filename);
-const configJson = require('../config/config');
+const configJson = require('../config/config').development;
 const db = {};
 
-const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 
-const config = configJson[env];
-
+console.log(configJson);
 let sequelize;
-if (config.environment === 'production') {
-  sequelize = new Sequelize(
-    process.env[config.use_env_variable], config,
-  );
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASS, {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      dialect: 'postgres',
-      dialectOption: {
-        ssl: true,
-        native: true,
-      },
-      logging: true,
-    },
-  );
-} else {
-  sequelize = new Sequelize('','', '', config);
-
-}
-
+  sequelize = new Sequelize('','', '', configJson);
 
 fs.readdirSync(__dirname)
   .filter((file) => {
