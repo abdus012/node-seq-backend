@@ -5,7 +5,7 @@ const config = {
         host: "localhost",
         database: "employee",
         password: "mypass",
-        port: 5432,
+        port: process.env.Port,
         dialect: "postgres",
       },
     },
