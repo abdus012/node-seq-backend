@@ -1,14 +1,16 @@
-const config = {
-  storage: {
-    development: {
-      username: "myuser",
-      host: "localhost",
-      database: "employee",
-      password: "mypass",
-      port: 5432,
-      dialect: "postgres",
-    },
+require('dotenv').config();
+
+module.exports = {
+  development: {
+    username: "myuser",
+    host: "localhost",
+    database: "employee",
+    password: "mypass",
+    port: 5432,
+    dialect: "postgres",
+  },
+  production: {
+    database: process.env.DATABASE_URLS,
+    dialect: 'postgres',
   },
 };
-
-module.exports = config;
