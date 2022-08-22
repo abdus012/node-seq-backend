@@ -32,7 +32,7 @@ const baseRoutes = {
             let response = "";
             // FROM Orders
 // INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
-            qry = 'SELECT emp_details.emp_name,emp_department.department_name FROM emp_details INNER JOIN emp_department ON emp_details.emp_domain=emp_department.department_name';
+            qry = 'SELECT emp_details.emp_name,emp_department.department_name,emp_count FROM emp_details INNER JOIN emp_department ON emp_details.emp_domain=emp_department.department_name';
             console.log(qry);
             const result1 = await await db.sequelize.query(qry)
               .then((result) => {
