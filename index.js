@@ -77,7 +77,20 @@ const baseRoutes = {
           const { emp_name, emp_domain } = request.payload;
           try {
             let response = "";
-            db["emp_details"]
+            await db["emp_department"].findOne({
+              where : {
+                department_name : emp_domain
+            },
+            raw : true
+            }).then(async (department_result)=>{
+                if(department_result === null){
+                 await db["emp_department"]
+              .create({
+                department_name: emp_domain,
+                emp_count: 0,
+              })
+              .then(async(newDepartmentCreated) => {
+                await db["emp_details"]
               .create({
                 emp_name: emp_name,
                 emp_domain: emp_domain,
@@ -87,12 +100,33 @@ const baseRoutes = {
               code: 100,
               msg: "Data added made successfully",
             };
-          } catch (err) {
+              });
+
+                }
+                else{
+                  await db["emp_details"]
+              .create({
+                emp_name: emp_name,
+                emp_domain: emp_domain,
+              })
+              .then((Result) => {});
+            return {
+              code: 100,
+              msg: "Data added made successfully",
+            };                
+                }
+            })
+          } 
+          catch (err) {
             return {
               error: err,
             };
           }
-        },
+          return {
+            code: 100,
+            msg: "Data added made successfully",
+          };
+        }
       },
     ]);
   },
