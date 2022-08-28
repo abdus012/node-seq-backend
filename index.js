@@ -4,8 +4,7 @@ const baseRoutes = {
   name: "myPlugin",
   version: "1.0.0",
   register: async function (server, options) {
-    server.route({
-  [  
+    server.route([  
       {
         method: "GET",
         path: "/",
