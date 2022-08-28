@@ -24,6 +24,50 @@ const baseRoutes = {
           }
         },
       },
+       {
+        method: "GET",
+        path: "/pushNewUserInSleepApp",
+        async handler(request, h) {
+          try {
+            let response = "";
+            const result1 = await db["sleepapp"]
+              .findAll({})
+              .then((result) => {
+                response = h.response(result);
+              });
+            return response;
+          } catch (err) {
+            return {
+              error: err,
+            };
+          }
+        },
+      },
+      {
+        method: "POST",
+        path: "/pushNewUserInSleepApp",
+        async handler(request, h) {
+          const { username, question1, question2 } = request.payload;
+          try {
+            let response = "";
+            db["sleepapp"]
+              .create({
+                username: username,
+                question1: question1,
+                question2: question2,
+              })
+              .then((Result) => {});
+            return {
+              code: 100,
+              msg: "Data added made successfully",
+            };
+          } catch (err) {
+            return {
+              error: err,
+            };
+          }
+        },
+      },
       {
         method: "GET",
         path: "/getJoinedData",
