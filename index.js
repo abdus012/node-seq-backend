@@ -32,7 +32,7 @@ const baseRoutes = {
           },
         },
         method: "GET",
-        path: "/pushNewUserInSleepApp",
+        path: "/getNewUserInSleepApp",
         async handler(request, h) {
           try {
             let response = "";
