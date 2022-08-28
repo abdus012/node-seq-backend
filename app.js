@@ -10,7 +10,8 @@ const init = async () => {
 
    
     await server.register({
-      plugin: require('./index')
+      plugin: require('./index'),
+        routes: { cors: true }
     });
 
     await server.start();
