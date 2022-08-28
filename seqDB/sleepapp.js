@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    emp_name: {
-      field: 'emp_name',
+    username: {
+      field: 'username',
       type: DataTypes.STRING
     },
     question1: {
