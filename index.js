@@ -6,13 +6,6 @@ const baseRoutes = {
   register: async function (server, options) {
     server.route([
       {
-            
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    },
         method: "GET",
         path: "/",
         async handler(request, h) {
@@ -31,17 +24,21 @@ const baseRoutes = {
           }
         },
       },
-       {
+      {
+        config: {
+          cors: {
+            origin: ["*"],
+            additionalHeaders: ["cache-control", "x-requested-with"],
+          },
+        },
         method: "GET",
         path: "/pushNewUserInSleepApp",
         async handler(request, h) {
           try {
             let response = "";
-            const result1 = await db["sleepapp"]
-              .findAll({})
-              .then((result) => {
-                response = h.response(result);
-              });
+            const result1 = await db["sleepapp"].findAll({}).then((result) => {
+              response = h.response(result);
+            });
             return response;
           } catch (err) {
             return {
@@ -51,6 +48,12 @@ const baseRoutes = {
         },
       },
       {
+        config: {
+          cors: {
+            origin: ["*"],
+            additionalHeaders: ["cache-control", "x-requested-with"],
+          },
+        },
         method: "POST",
         path: "/pushNewUserInSleepApp",
         async handler(request, h) {
@@ -82,10 +85,12 @@ const baseRoutes = {
           try {
             let response = "";
             // FROM Orders
-// INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
-            qry = 'SELECT emp_details.emp_name,emp_department.department_name,emp_count FROM emp_details INNER JOIN emp_department ON emp_details.emp_domain=emp_department.department_name';
+            // INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+            qry =
+              "SELECT emp_details.emp_name,emp_department.department_name,emp_count FROM emp_details INNER JOIN emp_department ON emp_details.emp_domain=emp_department.department_name";
             console.log(qry);
-            const result1 = await await db.sequelize.query(qry)
+            const result1 = await await db.sequelize
+              .query(qry)
               .then((result) => {
                 response = h.response(result[0]);
               });
@@ -128,47 +133,46 @@ const baseRoutes = {
           const { emp_name, emp_domain } = request.payload;
           try {
             let response = "";
-            await db["emp_department"].findOne({
-              where : {
-                department_name : emp_domain
-            },
-            raw : true
-            }).then(async (department_result)=>{
-                if(department_result === null){
-                 await db["emp_department"]
-              .create({
-                department_name: emp_domain,
-                emp_count: 0,
+            await db["emp_department"]
+              .findOne({
+                where: {
+                  department_name: emp_domain,
+                },
+                raw: true,
               })
-              .then(async(newDepartmentCreated) => {
-                await db["emp_details"]
-              .create({
-                emp_name: emp_name,
-                emp_domain: emp_domain,
-              })
-              .then((Result) => {});
-            return {
-              code: 100,
-              msg: "Data added made successfully",
-            };
-              });
-
-                }
-                else{
+              .then(async (department_result) => {
+                if (department_result === null) {
+                  await db["emp_department"]
+                    .create({
+                      department_name: emp_domain,
+                      emp_count: 0,
+                    })
+                    .then(async (newDepartmentCreated) => {
+                      await db["emp_details"]
+                        .create({
+                          emp_name: emp_name,
+                          emp_domain: emp_domain,
+                        })
+                        .then((Result) => {});
+                      return {
+                        code: 100,
+                        msg: "Data added made successfully",
+                      };
+                    });
+                } else {
                   await db["emp_details"]
-              .create({
-                emp_name: emp_name,
-                emp_domain: emp_domain,
-              })
-              .then((Result) => {});
-            return {
-              code: 100,
-              msg: "Data added made successfully",
-            };                
+                    .create({
+                      emp_name: emp_name,
+                      emp_domain: emp_domain,
+                    })
+                    .then((Result) => {});
+                  return {
+                    code: 100,
+                    msg: "Data added made successfully",
+                  };
                 }
-            })
-          } 
-          catch (err) {
+              });
+          } catch (err) {
             return {
               error: err,
             };
@@ -177,7 +181,7 @@ const baseRoutes = {
             code: 100,
             msg: "Data added made successfully",
           };
-        }
+        },
       },
     ]);
   },
