@@ -5,7 +5,7 @@ const baseRoutes = {
   version: "1.0.0",
   register: async function (server, options) {
     server.route([
-      {
+     
     config: {
         cors: {
             origin: ['*'],
