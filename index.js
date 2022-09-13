@@ -32,6 +32,86 @@ const baseRoutes = {
           },
         },
         method: "GET",
+        path: "/propertylist",
+        async handler(request, h) {
+          try {
+            let response = "";
+            const result1 = await db["propertylist"].findAll({}).then((result) => {
+              response = h.response(result);
+            });
+            return response;
+          } catch (err) {
+            return {
+              error: err,
+            };
+          }
+        },
+      },
+      {
+        config: {
+          cors: {
+            origin: ["*"],
+            additionalHeaders: ["cache-control", "x-requested-with"],
+          },
+        },
+        method: "POST",
+        path: "/pushProperty",
+        async handler(request, h) {
+          const { name, description, size } = request.payload;
+          try {
+            let response = "";
+            db["propertylist"]
+              .create({
+                name: name,
+                description: description,
+                size: size,
+              })
+              .then((Result) => {});
+            return {
+              code: 100,
+              msg: "Data added made successfully",
+            };
+          } catch (err) {
+            return {
+              error: err,
+            };
+          }
+        },
+      },
+      {
+        config: {
+          cors: {
+            origin: ["*"],
+            additionalHeaders: ["cache-control", "x-requested-with"],
+          },
+        },
+        method: "POST",
+        path: "/deleteProperty",
+        async handler(request, h) {
+          const { name, description, size } = request.payload;
+          try {
+            const row = await db["propertylist"].destroy({
+              where: { name: name,description: description,size:size },
+            }).then((Result) => {});
+            return {
+              code: 100,
+              msg: "Data deleted made successfully",
+            };
+          } catch (err) {
+            return {
+              error: err,
+            };
+          }
+        },
+      },
+      {
+        config: {
+          cors: {
+            origin: ["*"],
+            additionalHeaders: ["cache-control", "x-requested-with"],
+          },
+        },
+        method: "GET",
         path: "/getNewUserInSleepApp",
         async handler(request, h) {
           try {
